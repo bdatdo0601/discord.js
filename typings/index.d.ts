@@ -2065,7 +2065,7 @@ declare module 'discord.js' {
 		4004: string;
 		4010: string;
 		4011: string;
-	}
+	};
 
 	type WebhookEditData = {
 		name?: string;
