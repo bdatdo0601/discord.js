@@ -4,7 +4,7 @@ const browser = exports.browser = typeof window !== 'undefined';
 
 /**
  * Options for a client.
- * @typedef {Object} ClientOptions
+ * @typedef {Object} DefaultOptions
  * @property {number} [shardId=0] ID of the shard to run
  * @property {number} [shardCount=0] Total number of shards
  * @property {number} [messageCacheMaxSize=200] Maximum number of messages to cache per channel
@@ -50,7 +50,7 @@ exports.DefaultOptions = {
 
   /**
    * WebSocket options (these are left as snake_case to match the API)
-   * @typedef {Object} WebsocketOptions
+   * @typedef {Object} WebSocketOptions
    * @property {number} [large_threshold=250] Number of members in a guild to be considered large
    * @property {boolean} [compress=false] Whether to compress data sent on the connection
    * (defaults to `false` for browsers)
@@ -82,9 +82,21 @@ exports.DefaultOptions = {
   },
 };
 
+/**
+ * UserAgent property
+ * @typedef {string | null} UserAgent
+ */
 exports.UserAgent = browser ? null :
   `DiscordBot (${Package.homepage.split('#')[0]}, ${Package.version}) Node.js/${process.version}`;
 
+/**
+ * Websocket Codes
+ * @typedef {Object} WSCodes
+ * @property {string} [1000='Connection Gracefullyclosed'] Code 1000
+ * @property {string} [4004='Tried to identify with an invalid token'] Code 4004
+ * @property {string} [4010='Sharding data provided was invalid'] Code 4010
+ * @property {string} [4011='Shard would be on too many guilds if connected'] Code 4011
+ */
 exports.WSCodes = {
   1000: 'Connection gracefully closed',
   4004: 'Tried to identify with an invalid token',
@@ -92,6 +104,10 @@ exports.WSCodes = {
   4011: 'Shard would be on too many guilds if connected',
 };
 
+/**
+ * Allowed Image Formats
+ * @typedef {string[]} AllowedImageFormats
+ */
 const AllowedImageFormats = [
   'webp',
   'png',
@@ -99,6 +115,10 @@ const AllowedImageFormats = [
   'gif',
 ];
 
+/**
+ * Allowed Image Sizes
+ * @typedef {number[]} AllowedImageSizes
+ */
 const AllowedImageSizes = Array.from({ length: 8 }, (e, i) => 2 ** (i + 4));
 
 function makeImageUrl(root, { format = 'webp', size } = {}) {
@@ -114,6 +134,10 @@ function makeImageUrl(root, { format = 'webp', size } = {}) {
  * @property {number} [size] One of `16`, `32`, `64`, `128`, `256`, `512`, `1024`, `2048`
  */
 
+/**
+ * Endpoints
+ * @typedef {Object}
+ */
 exports.Endpoints = {
   CDN(root) {
     return {

@@ -79,13 +79,13 @@ declare module 'discord.js' {
 	}
 
 	export class BaseClient extends EventEmitter {
-		constructor(options?: ClientOptions);
+		constructor(options?: DefaultOptions);
 		private _intervals: Set<NodeJS.Timer>;
 		private _timeouts: Set<NodeJS.Timer>;
 		private readonly api: object;
 		private rest: object;
 
-		public options: ClientOptions;
+		public options: DefaultOptions;
 		public clearInterval(interval: NodeJS.Timer): void;
 		public clearTimeout(timeout: NodeJS.Timer): void;
 		public destroy(): void;
@@ -132,7 +132,7 @@ declare module 'discord.js' {
 	}
 
 	export class Client extends BaseClient {
-		constructor(options?: ClientOptions);
+		constructor(options?: DefaultOptions);
 		private readonly _pingTimestamp: number;
 		private actions: object;
 		private manager: ClientManager;
@@ -140,7 +140,7 @@ declare module 'discord.js' {
 		private ws: object;
 		private _eval(script: string): any;
 		private _pong(startTime: number): void;
-		private _validateOptions(options?: ClientOptions): void;
+		private _validateOptions(options?: DefaultOptions): void;
 
 		public broadcasts: VoiceBroadcast[];
 		public channels: ChannelStore;
@@ -1281,7 +1281,7 @@ declare module 'discord.js' {
 	}
 
 	export class WebhookClient extends WebhookMixin(BaseClient) {
-		constructor(id: string, token: string, options?: ClientOptions);
+		constructor(id: string, token: string, options?: DefaultOptions);
 	}
 
 //#endregion
@@ -1499,6 +1499,10 @@ declare module 'discord.js' {
 		deaf?: boolean;
 	};
 
+	type AllowedImageFormats = string[];
+
+	type AllowedImageSizes = number[];
+
 	type AuditLogChange = {
 		key: string;
 		old?: any;
@@ -1566,7 +1570,7 @@ declare module 'discord.js' {
 		type: 'BIG' | 'SMALL';
 	};
 
-	type ClientOptions = {
+	type DefaultOptions = {
 		presence?: PresenceData;
 		shardId?: number;
 		shardCount?: number;
@@ -2050,9 +2054,18 @@ declare module 'discord.js' {
 
 	type StringResolvable = string | string[] | any;
 
+	type UserAgent = string | null;
+
 	type UserResolvable = User | Snowflake | Message | GuildMember;
 
 	type VoiceStatus = number;
+
+	type WSCodes = {
+		1000: string;
+		4004: string;
+		4010: string;
+		4011: string;
+	}
 
 	type WebhookEditData = {
 		name?: string;
